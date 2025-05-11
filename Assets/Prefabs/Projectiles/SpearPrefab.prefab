@@ -234,11 +234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a326645ecb76f4bb868a70ff6b3cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 40
   damage: 10
   aoeRadius: 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
   explosionEffect: {fileID: 0}
-  lifetime: 5
+  lifetime: 2

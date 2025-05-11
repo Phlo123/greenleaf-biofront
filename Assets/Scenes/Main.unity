@@ -390,7 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f857487ca427a45840ffd44e487087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1984346679}
   offset: {x: 0, y: 10, z: -9.5}
   followSpeed: 5
 --- !u!1 &545575812
@@ -614,7 +613,6 @@ GameObject:
   - component: {fileID: 1023231681}
   - component: {fileID: 1023231680}
   - component: {fileID: 1023231679}
-  - component: {fileID: 1023231678}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -622,28 +620,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1023231678
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1023231677}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1023231679
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -822,11 +798,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2383536637178365375, guid: 3ab6e1d25bc432b47a661c13700e0ee2,
-        type: 3}
-      propertyPath: mainCam
-      value: 
-      objectReference: {fileID: 391816807}
     - target: {fileID: 4954937432234179664, guid: 3ab6e1d25bc432b47a661c13700e0ee2,
         type: 3}
       propertyPath: m_Name
@@ -887,12 +858,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ab6e1d25bc432b47a661c13700e0ee2, type: 3}
---- !u!4 &1984346679 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7107684875678958255, guid: 3ab6e1d25bc432b47a661c13700e0ee2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1984346678}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

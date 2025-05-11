@@ -12,26 +12,22 @@ public class SpearProjectile : MonoBehaviour
     private Vector3 direction;
 
     void Start()
-    {void Start()
-{
-    direction = transform.forward;
-    
-    // Adjust spear model tilt if needed
-    transform.Rotate(new Vector3(-90f, 0f, 0f)); // adjust if model points up by default
-    
-    Destroy(gameObject, lifetime);
-}
+    {
+        // Capture the initial forward direction at spawn
+        direction = transform.forward;
 
+        // Destroy the spear after X seconds no matter what
+        Destroy(gameObject, lifetime);
     }
 
     void Update()
     {
+        // Move the projectile forward
         transform.position += direction * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Explode on any collider (enemy, wall, object)
         Explode();
     }
 
@@ -44,7 +40,7 @@ public class SpearProjectile : MonoBehaviour
         foreach (var hit in hits)
         {
             Debug.Log("Spear AOE hit: " + hit.name);
-            // TODO: hit.GetComponent<Enemy>()?.TakeDamage(damage);
+            // hit.GetComponent<Enemy>()?.TakeDamage(damage);
         }
 
         Destroy(gameObject);
