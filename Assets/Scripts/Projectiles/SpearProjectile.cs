@@ -28,8 +28,10 @@ public class SpearProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Spear hit: " + other.gameObject.name);  // Confirm detection
         Explode();
     }
+
 
     void Explode()
     {
