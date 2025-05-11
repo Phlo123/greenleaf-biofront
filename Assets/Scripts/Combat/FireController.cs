@@ -5,6 +5,7 @@ public class FireController : MonoBehaviour
     public HeroAttackProfile profile;
     public Transform firePoint;
     public LayerMask enemyLayer;
+    public GameObject lightningPrefab;
 
     private float fireCooldown = 0f;
     private bool isAutoFire = false;
@@ -53,19 +54,14 @@ public class FireController : MonoBehaviour
         TryFire(dir);
     }
 
-    void TryFire(Vector3 dir)
+    void TryFire(Vector3 direction)
     {
         if (fireCooldown > 0f) return;
 
         switch (profile.attackType)
         {
             case HeroAttackProfile.AttackType.Raycast:
-                RaycastHit hit;
-                if (Physics.Raycast(firePoint.position, dir, out hit, profile.attackRange, enemyLayer))
-                {
-                    Debug.Log("Lightning hit: " + hit.collider.name);
-                    // TODO: hit.collider.GetComponent<Enemy>()?.TakeDamage(profile.damage);
-                }
+                ZapTargetInCone(direction);
                 break;
 
             case HeroAttackProfile.AttackType.Melee:
@@ -96,6 +92,53 @@ public class FireController : MonoBehaviour
 
         fireCooldown = profile.fireRate;
     }
+    void ZapTargetInCone(Vector3 direction)
+    {
+        float coneAngle = 60f;          // Half-angle of cone in degrees
+        float maxDistance = 15f;        // Max range
+        Collider[] enemies = Physics.OverlapSphere(firePoint.position, maxDistance, enemyLayer);
+
+        Transform bestTarget = null;
+        float closestDist = Mathf.Infinity;
+
+        foreach (var enemy in enemies)
+        {
+            Vector3 toEnemy = enemy.transform.position - transform.position;
+            toEnemy.y = 0f;
+
+            float angle = Vector3.Angle(direction, toEnemy);
+            if (angle <= coneAngle * 0.5f)
+            {
+                float dist = toEnemy.magnitude;
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    bestTarget = enemy.transform;
+                }
+            }
+        }
+
+        if (bestTarget != null)
+        {
+            Debug.Log("Zapped: " + bestTarget.name);
+
+            // TODO: Damage enemy
+            // bestTarget.GetComponent<Enemy>()?.TakeDamage(profile.damage);
+
+            // TODO: Spawn lightning bolt visual
+            // e.g. CreateLightningVFX(firePoint.position, bestTarget.position);
+        }
+    }
+
+    void CreateLightningVFX(Vector3 start, Vector3 end)
+    {
+        GameObject zap = Instantiate(lightningPrefab); // prefab with LineRenderer
+        LineRenderer lr = zap.GetComponent<LineRenderer>();
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        Destroy(zap, 0.1f); // destroy after short time
+    }
+
 
     Vector3 GetMouseWorldPos()
     {

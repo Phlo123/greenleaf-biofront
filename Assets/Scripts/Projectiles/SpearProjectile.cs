@@ -26,15 +26,24 @@ public class SpearProjectile : MonoBehaviour
         transform.position += direction * speed * Time.deltaTime;
     }
 
+    public LayerMask triggerLayers;
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Spear hit: " + other.gameObject.name);  // Confirm detection
-        Explode();
+        if (other.gameObject.layer == LayerMask.NameToLayer("World") ||
+            other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Explode(); // Triggers both AOE and self-destroy
+        }
     }
 
+    private bool hasExploded = false;
 
     void Explode()
     {
+        if (hasExploded) return;
+        hasExploded = true;
+
         if (explosionEffect)
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
@@ -47,4 +56,6 @@ public class SpearProjectile : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+
 }

@@ -803,11 +803,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThalamarPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 4954937432234179664, guid: 3ab6e1d25bc432b47a661c13700e0ee2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7107684875678958255, guid: 3ab6e1d25bc432b47a661c13700e0ee2,
         type: 3}
       propertyPath: m_LocalPosition.x
