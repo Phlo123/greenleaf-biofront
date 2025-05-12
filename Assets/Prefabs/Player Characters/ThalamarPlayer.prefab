@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1654254237976815805}
   - component: {fileID: 9182911212570737652}
   - component: {fileID: 237025581339548246}
+  - component: {fileID: 6994948851692640657}
   m_Layer: 8
   m_Name: ThalamarPlayer
   m_TagString: Player
@@ -113,11 +114,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25a1906196ea6649bceb1ca5e8e322b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 6b529113c18b83c4badc7bf49d8c4b1f, type: 2}
+  rotationSpeed: 10
+  firingConeAngle: 60
+--- !u!114 &6994948851692640657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4954937432234179664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347d60a0fb8d47041aedbacadd74ec1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spearPrefab: {fileID: 7345357467833481132, guid: 9f02926271ed24348bdd493322745817,
+    type: 3}
   firePoint: {fileID: 3651708898054549294}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  fireRate: 0.8
+  attackRange: 20
+  projectileCount: 1
+  spreadAngle: 10
+  pierces: 0
+  appliesFrost: 0
 --- !u!1 &6134236560350751884
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +354,7 @@ Transform:
   m_GameObject: {fileID: 8516466162827125150}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.011, z: 2.32}
+  m_LocalPosition: {x: 0.733, y: -0.011, z: 0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

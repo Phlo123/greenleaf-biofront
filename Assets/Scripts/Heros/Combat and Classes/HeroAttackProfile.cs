@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HeroAttackProfile", menuName = "GreenLeaf/Hero Attack Profile")]
+
 public class HeroAttackProfile : ScriptableObject
 {
     public enum AttackType { Melee, Raycast, Projectile }
@@ -13,4 +14,5 @@ public class HeroAttackProfile : ScriptableObject
 
     public GameObject projectilePrefab; // For Thalamar only
     public Transform firePoint; // Will be set dynamically from FireController
+
 }

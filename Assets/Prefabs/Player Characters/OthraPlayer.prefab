@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 5299373434982960684}
   - component: {fileID: 1674146166865608011}
   - component: {fileID: 774818522084734541}
+  - component: {fileID: 5272287984536476125}
   m_Layer: 0
   m_Name: OthraPlayer
   m_TagString: Player
@@ -154,9 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bea4b166aa35324f92c552110120ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotationSpeed: 10
-  mainCam: {fileID: 0}
+  moveSpeed: 4
 --- !u!54 &5299373434982960684
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -219,11 +218,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25a1906196ea6649bceb1ca5e8e322b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 39e657a645033f7459bc06afb1f90efc, type: 2}
+--- !u!114 &5272287984536476125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428753810681596070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6d1e110f2786d4286542f9932912f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    baseValue: 2
+    currentPercent: 100
+    maxPercent: 5000
+  fireRate:
+    baseValue: 0.4
+    currentPercent: 100
+    maxPercent: 300
+  attackRange:
+    baseValue: 20
+    currentPercent: 100
+    maxPercent: 300
+  coneAngle:
+    baseValue: 180
+    currentPercent: 100
+    maxPercent: 240
+  rotationSpeed:
+    baseValue: 12
+    currentPercent: 100
+    maxPercent: 240
+  lightningPrefab: {fileID: 5472803989187033466, guid: b238611f851e90d4c87108fd72a0bb02,
+    type: 3}
   firePoint: {fileID: 7354549002810883692}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  boltCount: 3
+  segments: 5
+  spread: 0.6
+  zigZagAmplitude: 0.5
 --- !u!1 &9056784387921614852
 GameObject:
   m_ObjectHideFlags: 0
