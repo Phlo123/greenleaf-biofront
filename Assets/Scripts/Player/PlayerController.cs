@@ -1,39 +1,134 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    private Camera mainCam;
+    [Header("Input")]
+    public PlayerInputActions inputActions;
 
-    private Rigidbody rb;
-    private Vector3 moveInput;
-    private Plane groundPlane;
+    private CharacterController controller;
+    private Camera mainCamera;
 
-    void Start()
+    private Vector2 moveInput;
+    private Vector3 moveDirection;
+    private Animator animator;
+    private float lastDashTime = -Mathf.Infinity;
+    private bool isDashing = false;
+    private float dashTimeRemaining = 0f;
+    private bool autoFireEnabled = false;
+    private AbilityController abilityController;
+    private HeroStatsHandler statsHandler;
+
+    private float autoTargetRange = 30f; // can expose later in HeroStats if needed
+
+    public void FireFromAnimation()
     {
-        rb = GetComponent<Rigidbody>();
-        mainCam = Camera.main;
-        groundPlane = new Plane(Vector3.up, Vector3.zero);
+        if (abilityController.CanCast())
+        {
+            Transform target = null;
+
+            abilityController.LaunchBasicAttack(); // Always fire forward
+
+            // Rotate toward target before firing
+            if (target != null)
+            {
+                Vector3 lookDir = target.position - transform.position;
+                lookDir.y = 0;
+                if (lookDir.sqrMagnitude > 0.01f)
+                {
+                    transform.rotation = Quaternion.LookRotation(lookDir);
+                }
+            }
+
+        }
+    }
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
+        mainCamera = Camera.main;
+        inputActions = new PlayerInputActions();
+        statsHandler = GetComponent<HeroStatsHandler>();
+        abilityController = GetComponent<AbilityController>();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        inputActions.Player.Dash.performed += ctx => TryDash();
+        inputActions.Player.AutoFire.performed += ctx => autoFireEnabled = !autoFireEnabled;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Disable();
+    }
+
+    private void Update()
+    {
+        animator.SetFloat("AttackSpeed", statsHandler.heroStats.fireRate);
+        moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+        HandleMovement();
+
+        RotateToMouse(); // Always face mouse
+
+        bool isFiring = autoFireEnabled || inputActions.Player.Fire.IsPressed();
+        animator.SetBool("IsFiring", isFiring);
     }
 
 
-    void Update()
+    private void HandleMovement()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-        moveInput = new Vector3(moveX, 0f, moveZ).normalized;
+        if (isDashing)
+        {
+            float dashSpeed = statsHandler.heroStats.dashDistance / statsHandler.heroStats.dashDuration;
+            Vector3 dashDir = (dashEnd - dashStart).normalized;
+            controller.Move(dashDir * dashSpeed * Time.deltaTime);
+
+            dashTimeRemaining -= Time.deltaTime;
+            if (dashTimeRemaining <= 0f)
+                isDashing = false;
+        }
+        else
+        {
+            Vector3 input = new Vector3(moveInput.x, 0, moveInput.y);
+            moveDirection = Quaternion.Euler(0, mainCamera.transform.eulerAngles.y, 0) * input.normalized;
+            controller.Move(moveDirection * statsHandler.heroStats.moveSpeed * Time.deltaTime);
+        }
+    }
+
+    private void RotateToMouse()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Vector3 lookDirection = hit.point - transform.position;
+            lookDirection.y = 0;
+            if (lookDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, statsHandler.heroStats.rotationSpeed * Time.deltaTime);
+            }
+        }
     }
 
 
-    void FixedUpdate()
+    private Vector3 dashStart;
+    private Vector3 dashEnd;
+
+    private void TryDash()
     {
-        // Move the player
-        rb.velocity = moveInput * moveSpeed;
+        if (statsHandler.currentDashCharges > 0 && !isDashing)
+        {
+            statsHandler.currentDashCharges--;
+            lastDashTime = Time.time;
 
-        // Lock Y position
-        rb.position = new Vector3(rb.position.x, 0f, rb.position.z);
-
-        // — no rotation code here any more —
+            dashStart = transform.position;
+            dashEnd = dashStart + moveDirection.normalized * statsHandler.heroStats.dashDistance;
+            dashTimeRemaining = statsHandler.heroStats.dashDuration;
+            isDashing = true;
+        }
     }
 }
