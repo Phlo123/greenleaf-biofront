@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController controller;
     private Camera mainCamera;
-
     private Vector2 moveInput;
     private Vector3 moveDirection;
     private Animator animator;
@@ -19,30 +18,7 @@ public class PlayerController : MonoBehaviour
     private bool autoFireEnabled = false;
     private AbilityController abilityController;
     private HeroStatsHandler statsHandler;
-
     private float autoTargetRange = 30f; // can expose later in HeroStats if needed
-
-    public void FireFromAnimation()
-    {
-        if (abilityController.CanCast())
-        {
-            Transform target = null;
-
-            abilityController.LaunchBasicAttack(); // Always fire forward
-
-            // Rotate toward target before firing
-            if (target != null)
-            {
-                Vector3 lookDir = target.position - transform.position;
-                lookDir.y = 0;
-                if (lookDir.sqrMagnitude > 0.01f)
-                {
-                    transform.rotation = Quaternion.LookRotation(lookDir);
-                }
-            }
-
-        }
-    }
 
     private void Awake()
     {
@@ -71,11 +47,15 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("AttackSpeed", statsHandler.heroStats.fireRate);
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         HandleMovement();
-
-        RotateToMouse(); // Always face mouse
+        RotateToMouse();
 
         bool isFiring = autoFireEnabled || inputActions.Player.Fire.IsPressed();
-        animator.SetBool("IsFiring", isFiring);
+
+        if (isFiring && abilityController.CanCast())
+        {
+            abilityController.LaunchBasicAttack(); // Fire NOW
+            animator.SetTrigger("AttackTrigger");   // Just for visual
+        }
     }
 
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -37,12 +36,6 @@ public class AbilityController : MonoBehaviour
             Debug.LogError("AbilityController: No TriggerRandomAttack found.");
     }
 
-    private void Update()
-    {
-        if (CanAutoAttack())
-            LaunchBasicAttack();
-    }
-
     private void SpawnAttackVFX()
     {
         if (attackVfxPrefab)
@@ -65,7 +58,6 @@ public class AbilityController : MonoBehaviour
         float spread = basicAttackProjectile.spreadAngle;
         float step = (count > 1) ? spread / (count - 1) : 0f;
         float startAngle = -spread / 2f;
-        attackTrigger.TriggerAttack();
 
         // Request up to "count" unique targets
         List<Transform> targets = EnemyTargetingSystem.FindMultipleEnemies(transform.position, 30f, count, enemyLayer);
@@ -98,15 +90,11 @@ public class AbilityController : MonoBehaviour
     {
         if (statsHandler == null)
         {
-            Debug.LogWarning("AbilityController: statsHandler is null in CanCast()");
+            Debug.LogWarning("Cannot cast: cooldown or condition blocked.");
+            //Debug.LogWarning("AbilityController: statsHandler is null in CanCast()");
             return false;
         }
         return Time.time >= nextAttackTime && !statsHandler.isDead;
     }
 
-    private bool CanAutoAttack()
-    {
-        // Placeholder — controlled by PlayerController
-        return false;
-    }
 }

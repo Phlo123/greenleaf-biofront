@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c46f56d1b0a69941bf39a1139865421, type: 3}
   m_Name: ProjectileData_Othra
   m_EditorClassIdentifier: 
-  speed: 80
-  lifetime: 1
+  speed: 200
+  lifetime: 3
   count: 3
-  spreadAngle: 20
-  pierceCount: 0
+  spreadAngle: 10
+  pierceCount: 1
   size: 0.4
   homingStrength: 1
-  homingStyle: 1
+  homingStyle: 0
   homingDelay: 0.5
   impactEffect: {fileID: 0}

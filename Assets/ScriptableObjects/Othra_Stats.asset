@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595a30a2bed4b6d498fd2f5f9226b843, type: 3}
   m_Name: Othra_Stats
   m_EditorClassIdentifier: 
-  dashCooldown: 2
+  dashCooldown: 1
   dashDistance: 6
   dashDuration: 0.15
   dashCharges: 2
@@ -20,4 +20,4 @@ MonoBehaviour:
   moveSpeed: 6
   rotationSpeed: 5
   baseDamage: 4
-  fireRate: 4
+  fireRate: 1
