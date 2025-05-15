@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     public ProjectileData data;
     public Transform target;
     public LayerMask hitLayers;
+    public LayerMask killOnHitLayers;
 
     private Vector3 direction;
     private float lifeRemaining;
@@ -14,16 +15,20 @@ public class Projectile : MonoBehaviour
     private float homingTimer;
     private bool wasHoming = false;
     private HashSet<Transform> piercedTargets = new HashSet<Transform>();
+
+
     private void Start()
     {
+        rb = GetComponent<Rigidbody>(); // Assign first!
+
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+
         lifeRemaining = data.lifetime;
         remainingPierces = data.pierceCount;
         transform.localScale = Vector3.one * data.size;
 
-        rb = GetComponent<Rigidbody>();
         homingTimer = 0f;
-
-        direction = transform.forward; // key change
+        direction = transform.forward;
         wasHoming = (target != null);
     }
 
@@ -61,15 +66,22 @@ public class Projectile : MonoBehaviour
         }
 
 
-        rb.MovePosition(transform.position + direction * data.speed * Time.deltaTime);
+        Vector3 nextPos = transform.position + direction * data.speed * Time.deltaTime;
+        nextPos.y = transform.position.y; // maintain original Y
+        rb.MovePosition(nextPos);
+
     }
-
-
 
     private void OnTriggerEnter(Collider other)
     {
-        if (((1 << other.gameObject.layer) & hitLayers) == 0)
+        // Kill on specific layers (World, etc.)
+        if (((1 << other.gameObject.layer) & killOnHitLayers) != 0)
+        {
+            if (data.impactEffect)
+                Instantiate(data.impactEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
             return;
+        }
 
         Transform hitTarget = other.transform;
 

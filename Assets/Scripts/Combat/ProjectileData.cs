@@ -16,4 +16,5 @@ public class ProjectileData : ScriptableObject
     public HomingStyle homingStyle = HomingStyle.Instant;
     public float homingDelay = 0.2f;
     public GameObject impactEffect;
+    public float retargetCooldown = 0.1f;
 }

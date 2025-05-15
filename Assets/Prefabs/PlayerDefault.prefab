@@ -195,9 +195,10 @@ MonoBehaviour:
     type: 2}
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1152
   projectilePrefab: {fileID: 2200855686048924022, guid: 76a348f5099ab174993cdd11abe44a09,
     type: 3}
+  attackVfxPrefab: {fileID: 0}
 --- !u!95 &1453107791699810099
 Animator:
   serializedVersion: 5

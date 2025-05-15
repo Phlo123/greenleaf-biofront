@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private bool autoFireEnabled = false;
     private AbilityController abilityController;
     private HeroStatsHandler statsHandler;
-    private float autoTargetRange = 30f; // can expose later in HeroStats if needed
 
     private void Awake()
     {
@@ -56,6 +55,10 @@ public class PlayerController : MonoBehaviour
             abilityController.LaunchBasicAttack(); // Fire NOW
             animator.SetTrigger("AttackTrigger");   // Just for visual
         }
+
+        Vector3 fixedPosition = transform.position;
+        fixedPosition.y = 0f;
+        transform.position = fixedPosition;
     }
 
 
