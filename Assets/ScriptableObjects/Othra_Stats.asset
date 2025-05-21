@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Othra_Stats
   m_EditorClassIdentifier: 
   dashCooldown: 1
-  dashDistance: 6
-  dashDuration: 0.15
+  dashDistance: 3
+  dashDuration: 0.2
   dashCharges: 2
   maxHealth: 100
-  moveSpeed: 6
+  moveSpeed: 4
   rotationSpeed: 5
   baseDamage: 4
-  fireRate: 1
+  fireRate: 4

@@ -10,7 +10,7 @@ public class TriggerRandomAttack : MonoBehaviour
     public void TriggerAttack()
     {
         int random = Random.Range(0, numberOfAttacks);
-        Debug.Log("Random AttackIndex: " + random);
+        //Debug.Log("Random AttackIndex: " + random);
         animator.SetInteger("AttackIndex", random);
         animator.SetTrigger("IsFiring");
     }

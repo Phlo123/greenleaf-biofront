@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: ProjectileData_Othra
   m_EditorClassIdentifier: 
   speed: 20
-  lifetime: 8
-  count: 10
-  spreadAngle: 20
-  pierceCount: 0
+  lifetime: 2
+  count: 3
+  spreadAngle: 60
+  pierceCount: 50
   size: 0.4
   homingStrength: 1
   homingStyle: 1
   homingDelay: 0.1
   impactEffect: {fileID: 0}
-  retargetCooldown: 0
+  retargetCooldown: 0.1

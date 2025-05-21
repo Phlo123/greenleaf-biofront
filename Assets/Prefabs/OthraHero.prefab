@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 3238537720539541411}
   - component: {fileID: 8486315753015536140}
   - component: {fileID: 2800232438035121311}
+  - component: {fileID: 3712965022424942747}
   m_Layer: 8
   m_Name: OthraHero
   m_TagString: Player
@@ -199,6 +200,8 @@ Transform:
   m_Children:
   - {fileID: 2821575551039115397}
   - {fileID: 3533967935826343517}
+  - {fileID: 759795051845196426}
+  - {fileID: 3159565427014538093}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2284371036459209486
@@ -312,6 +315,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8486315753015536140}
   numberOfAttacks: 3
+--- !u!114 &3712965022424942747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456688207606703917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f561ccca8436a041803847bb1f6bb16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnerCount: 100
+  ringRadius: 20
+  spawnerPrefab: {fileID: 7970774580355494326, guid: 28fe96dfd08d5ff42b8bd6264d78ade8,
+    type: 3}
+  player: {fileID: 163186656060132345}
+  spawnCheckInterval: 1
+  baseSpawnRate: 100
+  spawnGrowthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.8333333
+      outSlope: 0.8333333
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 600
+      value: 500
+      inSlope: 0.8333333
+      outSlope: 0.8333333
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  enemyTypes:
+  - {fileID: 11400000, guid: bf6a53b2175ac414d81c129910ebb5d4, type: 2}
+  - {fileID: 11400000, guid: e1c7c498b9e25a0489333d6d5256fa37, type: 2}
+  enemyCaps:
+  - timeLimit: 60
+    maxEnemies: 100
+    eliteAllowed: 0
+  - timeLimit: 120
+    maxEnemies: 200
+    eliteAllowed: 0
+  softOverflowAllowance: 10
+  clusterSizeRange: {x: 3, y: 8}
+  debugSpawns: 0
+  spawnersPaused: 0
 --- !u!1 &509015243793485542
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,6 +436,56 @@ Transform:
   - {fileID: 8652612932774886908}
   m_Father: {fileID: 7553181113922407318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &777894144655946458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 759795051845196426}
+  - component: {fileID: 2368235382034340715}
+  m_Layer: 0
+  m_Name: ChunkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &759795051845196426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777894144655946458}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 163186656060132345}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2368235382034340715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777894144655946458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe623e9865ab84e4f862eba1130b55d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chunkPrefabs:
+  - {fileID: 9129387073192173272, guid: 41251207144c10f43bc9e2c6953c79a3, type: 3}
+  chunkSize: 20
+  loadRadius: 3
+  unloadRadius: 4
+  player: {fileID: 163186656060132345}
 --- !u!1 &778764909338032753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,6 +1349,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3139163487257228103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4791770133431211238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3159565427014538093}
+  - component: {fileID: 3873386438884242251}
+  m_Layer: 0
+  m_Name: EnemyTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3159565427014538093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4791770133431211238}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.675192, y: 15.387004, z: 2.8501184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 163186656060132345}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3873386438884242251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4791770133431211238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df98a902291222c4389e035e8466ca96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4909463094836907267
 GameObject:
   m_ObjectHideFlags: 0

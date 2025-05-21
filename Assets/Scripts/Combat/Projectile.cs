@@ -77,10 +77,12 @@ public class Projectile : MonoBehaviour
         // Kill on specific layers (World, etc.)
         if (((1 << other.gameObject.layer) & killOnHitLayers) != 0)
         {
+
             if (data.impactEffect)
                 Instantiate(data.impactEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
             return;
+
         }
 
         Transform hitTarget = other.transform;
@@ -93,6 +95,11 @@ public class Projectile : MonoBehaviour
 
         // Apply damage, effects etc.
         //Debug.Log($"Projectile hit {hitTarget.name}");
+
+        if (other.CompareTag("Enemy"))
+        {
+            other.GetComponent<EnemyStatsHandler>()?.TakeDamage(999f);
+        }
 
         remainingPierces--;
         if (remainingPierces < 0)

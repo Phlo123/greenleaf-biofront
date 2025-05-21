@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance { get; private set; }
     [Header("Input")]
     public PlayerInputActions inputActions;
 
@@ -21,6 +22,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         mainCamera = Camera.main;
